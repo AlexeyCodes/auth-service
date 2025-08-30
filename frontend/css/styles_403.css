@@ -1,0 +1,23 @@
+/* Общий фон и центрирование */
+:root{
+    --accent:#7870ff;
+    --accent-strong:#5c55f0;
+    --bg1:#000000;
+    --bg2:#323232;
+}
+
+*{box-sizing:border-box}
+html,body{height:100%;margin:0;padding:0}
+
+body {
+    font-family: 'Arial', sans-serif;
+    background: linear-gradient(135deg, var(--bg1), var(--bg2));
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+h1 {
+    color:white; 
+}

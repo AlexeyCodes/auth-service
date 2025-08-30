@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Register</title>
+    <link rel="stylesheet" href="css/styles_three.css">
+    <style>
+        .message {
+            margin-top: 10px;
+            padding: 12px;
+            border-radius: 8px;
+            font-size: 14px;
+            text-align: center;
+            display: none;
+        }
+        .message.error {
+            background: #ffe5e5;
+            color: #d9534f;
+            border: 1px solid #d9534f;
+        }
+        .message.success {
+            background: #e5ffe5;
+            color: #3c763d;
+            border: 1px solid #3c763d;
+        }
+    </style>
+</head>
+<body>
+<div class="container">
+    <h1 id="Welcome">Register</h1>
+    <div id="message" class="message"></div>
+
+    <form id="registerForm">
+        <input type="text" id="regUsername" placeholder="Username" required>
+        <input type="password" id="regPassword" placeholder="Password" required>
+        <button type="submit">Register</button>
+    </form>
+    <p>
+        Already have an account? <a href="login.html">Login</a>
+    </p>
+</div>
+
+
+<script>
+const registerForm = document.getElementById("registerForm");
+const messageBox = document.getElementById("message");
+
+// Если пользователь уже авторизован, редиректим на профиль
+document.addEventListener("DOMContentLoaded", async () => {
+    const res = await fetch("/api/user/profile", { credentials: "include" });
+    if (res.ok) {
+        window.location.href = "/profile.html";
+    }
+});
+
+registerForm.addEventListener("submit", async (e) => {
+    e.preventDefault();
+    const username = document.getElementById("regUsername").value;
+    const password = document.getElementById("regPassword").value;
+
+    // простая проверка длины пароля
+    if (password.length < 6) {
+        showMessage("Password must be at least 6 characters long", "error");
+        return;
+    }
+
+    try {
+        const res = await fetch("/api/register", {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify({ username, password }),
+            credentials: "include" // чтобы cookie сохранялось сразу
+        });
+
+        const data = await res.json();
+
+        if (res.ok) {
+            showMessage("Registration successful! Redirecting to login...", "success");
+            setTimeout(() => {
+                window.location.href = "/login.html";
+            }, 1500);
+        } else {
+            showMessage(data.error || "Registration failed", "error");
+        }
+    } catch (err) {
+        showMessage("Server error. Try later.", "error");
+    }
+});
+
+function showMessage(msg, type) {
+    messageBox.textContent = msg;
+    messageBox.className = "message " + type;
+    messageBox.style.display = "block";
+}
+</script>
+</body>
+</html>
