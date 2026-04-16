@@ -1,31 +1,34 @@
 # Auth Service
 
-Auth Service — это микросервис аутентификации, реализованный на Go. Основная задача сервиса заключается в обеспечении регистрации пользователей, их авторизации и выдачи токенов доступа.
+Auth Service is an authentication microservice implemented in Go. Its main purpose is to handle user registration, authentication, and access token issuance.
 
-## Возможности
+## Features
 
-- Регистрация пользователей
-- Авторизация по никнейму и паролю
-- Выдача и валидация JWT токенов
-- Поддержка cookie-сессий
-- Проверка авторизации на защищенных ресурсах
+- User registration
+- Authentication using username and password
+- Issuing and validating JWT tokens
+- Cookie-based session support
+- Authorization checks for protected resources
 
-## Используемые технологии
+## Technologies Used
 
 - Go
-- Gin (веб-фреймворк)
+- Gin (web framework)
 - PostgreSQL
-- pgx (драйвер для работы с PostgreSQL)
-- godotenv (загрузка переменных окружения)
+- pgx (PostgreSQL driver)
+- godotenv (environment variable loader)
 
-## Архитектура проекта
+## Project Architecture
 
-Проект построен по принципам микросервисной архитектуры и предполагает использование в составе более крупного приложения. В текущей реализации сервис разделен на несколько основных частей: обработчики запросов, работа с базой данных, модели данных и конфигурационные файлы.
+The project follows microservice architecture principles and is designed to be part of a larger system. In its current implementation, the service is divided into several core components: request handlers, database layer, data models, and configuration files.
 
-## Конфигурация
+## Configuration
 
-Все параметры конфигурации, включая строку подключения к базе данных, секрет для JWT и порт запуска сервиса, задаются через файл окружения `.env`.
+All configuration parameters, including the database connection string, JWT secret, and service port, are defined via a `.env` file.
 
-## Запуск
+## Running the Service
 
-Запуск осуществляется с помощью команды `go run main.go`. Для корректной работы требуется настроенная база данных PostgreSQL и файл окружения с необходимыми параметрами.
+To run the service, use the command:
+
+```bash
+go run cmd/login/main.go
